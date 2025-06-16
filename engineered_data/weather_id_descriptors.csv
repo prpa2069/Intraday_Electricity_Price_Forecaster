@@ -1,0 +1,39 @@
+weather_id,weather_main,weather_description
+800,clear,sky is clear
+801,clouds,few clouds
+802,clouds,scattered clouds
+803,clouds,broken clouds
+804,clouds,overcast clouds
+500,rain,light rain
+501,rain,moderate rain
+502,rain,heavy intensity rain
+701,mist,mist
+522,rain,heavy intensity shower rain
+521,rain,shower rain
+503,rain,very heavy rain
+202,thunderstorm,thunderstorm with heavy rain
+200,thunderstorm,thunderstorm with light rain
+201,thunderstorm,thunderstorm with rain
+211,thunderstorm,proximity thunderstorm
+520,rain,light intensity shower rain
+300,drizzle,light intensity drizzle
+741,fog,fog
+301,drizzle,drizzle
+711,smoke,smoke
+302,drizzle,heavy intensity drizzle
+721,haze,haze
+310,drizzle,light intensity drizzle rain
+600,snow,light snow
+616,snow,rain and snow
+615,snow,light rain and snow
+601,snow,snow
+210,thunderstorm,light thunderstorm
+602,snow,heavy snow
+611,snow,sleet
+311,drizzle,rain and drizzle
+612,snow,shower sleet
+620,snow,light shower snow
+531,rain,ragged shower rain
+731,dust,sand dust whirls
+761,dust,dust
+771,squall,squalls
