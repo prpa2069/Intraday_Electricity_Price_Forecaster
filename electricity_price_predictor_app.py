@@ -8,7 +8,7 @@ import warnings
 from sklearn.metrics import mean_absolute_error, mean_squared_error, root_mean_squared_error
 import plotly.graph_objs as go
 
-#streamlit run .\electricity_price_predictor_app
+#streamlit run .\electricity_price_predictor_app.py
 
 
 
@@ -141,8 +141,8 @@ def create_engineered_features(df, feature_engineered_data):
 
 def apply_transformations(user_data, train_df):
     #Int transformers
-    transformer_scaler = joblib.load(r"transformers\scaler.pkl")
-    transformer_pca = joblib.load(r"transformers\pca.pkl")
+    transformer_scaler = joblib.load("transformers/scaler.pkl")
+    transformer_pca = joblib.load("transformers/pca.pkl")
 
     #Create variables for storing time, response variable, and predictors
     time = user_data["time"]
@@ -199,7 +199,7 @@ def upload_file(label):
 def create_sidebar():
     #Create a header and add a graphic
     st.sidebar.header("Power Generation Features")
-    st.sidebar.image(Image.open(r'images\background\stonks_rising.jpg'), use_container_width =True)
+    st.sidebar.image(Image.open('images/background/stonks_rising.jpg'), use_container_width =True)
     # Define the features and their descriptions
     features = {
         "Time": "Timestamp in the format: YYYY-MM-DD HH:MM:SS±HH:MM ",
@@ -223,19 +223,19 @@ def create_sidebar():
         "Total Load Actual": "Actual total power load (MW).",
         "Price Day-Ahead": "Forecasted Day-Ahead price of electricity (€/MWh)",
         "Price Actual": "Current electricity price (€/MWh)",
-        "city_name": "Name of the city for which the weather data is provided. Either Valencia, Madrid, Bilbao, Barcelona, or Seville",
-        "temp": "Current temperature in Kelvin (K).",
-        "temp_min": "Minimum temperature recorded for the day in Kelvin (K).",
-        "temp_max": "Maximum temperature recorded for the day in Kelvin (K).",
-        "pressure": "Atmospheric pressure at sea level measured in hPa (hectopascals).",
-        "humidity": "Humidity level expressed as a percentage (%).",
-        "wind_speed": "Wind speed measured in meters per second (m/s).",
-        "wind_deg": "Wind direction indicated in degrees (°) from true north.",
-        "rain_1h": "Amount of rain that has fallen in the last hour, measured in millimeters (mm).",
-        "rain_3h": "Amount of rain that has fallen in the last three hours, measured in millimeters (mm).",
-        "snow_3h": "Amount of snow that has fallen in the last three hours, measured in millimeters (mm).",
-        "clouds_all": "Cloud cover percentage indicating how much of the sky is covered by clouds (%).",
-        "weather_id": "Weather condition code representing the current weather status."
+        "City Name": "Name of the city for which the weather data is provided. Either Valencia, Madrid, Bilbao, Barcelona, or Seville",
+        "Temp": "Current temperature in Kelvin (K).",
+        "Temp Min": "Minimum temperature recorded for the day in Kelvin (K).",
+        "Temp Max": "Maximum temperature recorded for the day in Kelvin (K).",
+        "Pressure": "Atmospheric pressure at sea level measured in hPa (hectopascals).",
+        "Humidity": "Humidity level expressed as a percentage (%).",
+        "Wind Speed": "Wind speed measured in meters per second (m/s).",
+        "Wind Direction": "Wind direction indicated in degrees (°) from true north.",
+        "Rain 1h": "Amount of rain that has fallen in the last hour, measured in millimeters (mm).",
+        "Rain 3h": "Amount of rain that has fallen in the last three hours, measured in millimeters (mm).",
+        "Snow 3h": "Amount of snow that has fallen in the last three hours, measured in millimeters (mm).",
+        "Clouds All": "Cloud cover percentage indicating how much of the sky is covered by clouds (%).",
+        "Weather Id": "Weather condition code representing the current weather status."
     }
 
 
@@ -253,15 +253,15 @@ create_sidebar()
 
 #Title and graphic
 st.markdown("<h1 style='text-align: center;'>Gooder Spain Energy Price Predictor</h1>", unsafe_allow_html=True)
-st.image(Image.open(r'images\background\spain_beach.jpg'), use_container_width =True)
+st.image(Image.open('images/background/spain_beach.jpg'), use_container_width =True)
 
 #Intialize variables based on previous stored data
-weather_df = pd.read_csv(r"engineered_data\weather_data_val_manipulated.csv")
-energy_df = pd.read_csv(r"engineered_data\energy_data_val_manipulated.csv")
-weather_id_desc = pd.read_csv(r"engineered_data\weather_id_descriptors.csv")
-engineered_features_data = load_dataset(r"engineered_data\feature_engineered_data.csv")
-ml_data_X_train = load_dataset(r"engineered_data\feature_engineered_data_X_train.parquet")
-best_model_linear_reg = joblib.load(r"models/best_model_linear_reg.pkl")
+weather_df = pd.read_csv("engineered_data/weather_data_val_manipulated.csv")
+energy_df = pd.read_csv("engineered_data/energy_data_val_manipulated.csv")
+weather_id_desc = pd.read_csv("engineered_data/weather_id_descriptors.csv")
+engineered_features_data = load_dataset("engineered_data/feature_engineered_data.csv")
+ml_data_X_train = load_dataset("engineered_data/feature_engineered_data_X_train.parquet")
+best_model_linear_reg = joblib.load("models/best_model_linear_reg.pkl")
 
 #Output examples to provide a tabular representation of features
 st.write("Example weather data:")
@@ -295,7 +295,7 @@ with right:
     # User input validation
     if weather_user_data is not None and energy_user_data is not None:
         if "price actual" not in energy_user_data or "temp" not in weather_user_data:
-            st.error("Improper dataset uploaded. Ensure the correct datasets")
+            st.error("Improper dataset uploaded. Ensure the correct datasets are passed")
         elif len(weather_user_data) < 168:
             st.error("Please provide at least 7 days of data")
         else:
@@ -317,7 +317,7 @@ with right:
     if b:
         #If no proper data is provided default to a pre-defined dataset
         if weather_user_data is None or energy_user_data is None:
-            st.write("A portion of the original datasets will be used as no/improper data has been provided for either weather or energy")
+            st.write("A portion of the original datasets will be used as no/improper data has been provided for either the weather or energy datasets")
             weather_user_data = weather_df
             energy_user_data = energy_df
         # Check and add space only to 'Barcelona', original data provided the value with a space as " Barcelona"
@@ -417,7 +417,7 @@ with left:
     
     # Output results of training and testing set
     st.write("Five-Fold Time Series CV Linear Regression Model - Train vs. Val")
-    st.image(Image.open('images\graphs\linear_model_weekly_actual_preds.png'), use_container_width =True)
+    st.image(Image.open('images/graphs/linear_model_weekly_actual_preds.png'), use_container_width =True)
     
     # If button is pressed, output an interactable graph for the user dataset
     if b:
