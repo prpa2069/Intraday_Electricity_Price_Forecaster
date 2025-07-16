@@ -72,3 +72,5 @@ The primary objectives of this project are to:
     Identify key features that impact electricity prices in the Spanish grid.
     Develop and validate models for intra-day forecasting of electricity prices using the identified predictors.
     Provide insights into the relationship between weather, generation, load, and electricity pricing.
+
+Future work includes the derivation of the neural network, particulary Low Short-Term Memory (LSTM) Models.  
